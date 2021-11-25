@@ -30,7 +30,7 @@ EOF
 systemctl restart shadowsocks-libev.service >&- 2>&-
 systemctl enable shadowsocks-libev.service >&- 2>&-
 
-echo -e "ShadowSocks "
+echo -n -e "ShadowSocks "
 if ! [ "$(systemctl status shadowsocks-libev.service | grep -o "running" )" = "running" ]; then
 echo -e "${RED}ошибка, не запущен /root/${DEFAULT}"
 else
