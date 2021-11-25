@@ -15,7 +15,7 @@ if [ "$(dpkg --get-selections rng-tools | awk '{print $2}')" = "install" ]; then
 rngd -r /dev/urandom
 
 password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)
-cat >>/etc/shadowsocks-libev/config.json <<EOF
+cat >/etc/shadowsocks-libev/config.json <<EOF
     "server":["::1", "0.0.0.0"],
     "mode":"tcp_and_udp",
     "server_port":8388,
@@ -35,4 +35,11 @@ echo -e "${RED}ошибка, не запущен /root/${DEFAULT}"
 else
 echo -e "${GREEN}запущен${DEFAULT}"
 fi
+
+ip=$(curl check-host.net/ip 2>/dev/null) >&- 2>&-
+echo "Ваш конфиг для ShadowSocks:"
+echo "Server ip - $ip"
+echo "Server Port - 8388"
+echo "Password - $password"
+echo "Encryption - chacha20-ietf-poly1305"
 
