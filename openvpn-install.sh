@@ -39,7 +39,8 @@ if [ "$(dpkg --get-selections apache2 | awk '{print $2}')" = "install" ]; then e
 echo -n -e "               zip " & echo -n $(apt install zip -y >&- 2>&-)
 if [ "$(dpkg --get-selections zip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install zip ${DEFAULT}" ;fi
 
-echo -n -e "               virtualbox -нажмите Tab + Enter + Tab + Enter" & echo -n $(apt install virtualbox virtualbox-ext-pack -y >&- 2>&-)
+echo -n -e "               virtualbox" 
+apt install virtualbox virtualbox-ext-pack
 if [ "$(dpkg --get-selections virtualbox | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install virtualbox virtualbox-ext-pack ${DEFAULT}" ;fi
 
 echo -n -e "               transmission-cli " & echo -n $(apt install transmission-cli -y >&- 2>&-)
