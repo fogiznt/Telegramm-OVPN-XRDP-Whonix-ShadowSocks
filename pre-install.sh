@@ -56,5 +56,5 @@ read value
 if ! [ "$value" = "" ];then exit;fi
 echo -e "${GREEN}Первый сервер${DEFAULT}"
 ssh root@$ip_1 -p $port_1 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/openvpn-install.sh -O openvpn-install.sh --secure-protocol=TLSv1 && chmod +x openvpn-install.sh && ./openvpn-install.sh"
-echo -e "${GREEN}Второй сервре${DEFAULT}"
+echo -e "${GREEN}Второй сервер${DEFAULT}"
 ssh root@$ip_2 -p $port_2 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/shadowsocks.sh --secure-protocol=TLSv1 && chmod +x shadowsocks.sh && ./shadowsocks.sh"
