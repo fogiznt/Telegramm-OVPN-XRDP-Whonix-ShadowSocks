@@ -37,7 +37,7 @@ else
 echo -e "${GREEN}запущен${DEFAULT}"
 fi
 
-ip=$(curl check-host.net/ip 2>/dev/null) >&- 2>&-
+ip=$(wget -qO- eth0.me)
 echo "Ваш конфиг для ShadowSocks:"
 echo "Server ip - $ip"
 echo "Server Port - 8388"
