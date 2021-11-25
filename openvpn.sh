@@ -42,6 +42,9 @@ if [ "$(dpkg --get-selections zip | awk '{print $2}')" = "install" ]; then echo 
 echo -n -e "               virtualbox " & echo -n $(apt install virtualbox virtualbox-ext-pack -y >&- 2>&-)
 if [ "$(dpkg --get-selections virtualbox | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install virtualbox virtualbox-ext-pack ${DEFAULT}" ;fi
 
+echo -n -e "               transmission-cli " & echo -n $(apt install transmission-cli -y >&- 2>&-)
+if [ "$(dpkg --get-selections transmission-cli | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install transmission-cli ${DEFAULT}" ;fi
+
 echo -e "Генерация сертификатов: "
 
 cd /usr/share/easy-rsa/
