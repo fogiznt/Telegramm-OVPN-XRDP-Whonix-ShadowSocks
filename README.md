@@ -1,4 +1,4 @@
-# Telegramm-OVPN-XRDP-Whonix-ShadowSocks
+# Telegram-OVPN-XRDP-Whonix-ShadowSocks
 
 
 Установка
