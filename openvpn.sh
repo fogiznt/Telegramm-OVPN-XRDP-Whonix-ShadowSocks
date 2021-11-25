@@ -388,6 +388,64 @@ done
 FOE
 chmod +x account_manager.sh
 
+
+username=client-1
+local_ip="10.8.8.2"
+
+cd /usr/share/easy-rsa
+./easyrsa build-client-full $username nopass
+cd /etc/openvpn/clients/
+ca=$(cat /usr/share/easy-rsa/pki/ca.crt)
+cert=$(cat /usr/share/easy-rsa/pki/issued/$username.crt)
+key=$(cat /usr/share/easy-rsa/pki/private/$username.key)
+tls=$(cat /etc/openvpn/tls.key)
+ip=$(curl check-host.net/ip)
+cat >$username.ovpn <<EOF
+client
+dev tun
+proto udp
+remote $ip 443
+
+cipher AES-128-GCM
+auth SHA256
+auth-nocache
+verify-x509-name server name
+
+tls-client
+remote-cert-tls server
+
+persist-key
+persist-tun
+
+nobind
+
+resolv-retry infinite
+ignore-unknown-option block-outside-dns
+block-outside-dns
+setenv opt block-outside-dns
+explicit-exit-notify 2
+nobind
+
+<ca>
+$ca
+</ca>
+<cert>
+$cert
+</cert>
+<key>
+$key
+</key>
+<tls-crypt>
+$tls
+</tls-crypt>
+EOF
+cd /etc/openvpn/ccd/
+cat >$username <<EOF
+ifconfig-push $local_ip 255.255.255.0
+EOF
+cd /etc/openvpn/clients/
+cp $username.ovpn ~/
+
 echo -e "${GREEN}   ____             __          __   __                                __       __           __";
 echo -e "  /  _/  ___   ___ / /_ ___ _  / /  / /      ____ ___   __ _    ___   / / ___  / /_ ___  ___/ /";
 echo -e " _/ /   / _ \ (_-</ __// _ \`/ / /  / /      / __// _ \ /  ' \  / _ \ / / / -_)/ __// -_)/ _  / ";
