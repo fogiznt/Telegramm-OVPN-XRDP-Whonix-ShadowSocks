@@ -39,8 +39,27 @@ if [ "$(dpkg --get-selections apache2 | awk '{print $2}')" = "install" ]; then e
 echo -n -e "               zip " & echo -n $(apt install zip -y >&- 2>&-)
 if [ "$(dpkg --get-selections zip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install zip ${DEFAULT}" ;fi
 
+echo -n -e "               lxqt " & echo -n $(apt install lxqt -y >&- 2>&-)
+if [ "$(dpkg --get-selections lxqt | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install lxqt ${DEFAULT}" ;fi
+
+echo -n -e "               xrdp " & echo -n $(apt install xrdp -y >&- 2>&-)
+adduser xrdp ssl-cert
+if [ "$(dpkg --get-selections xrdp | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install xrdp ${DEFAULT}" ;fi
+
+
+echo -n -e "               gnupg " & echo -n $(apt install gnupg -y >&- 2>&-)
+if [ "$(dpkg --get-selections gnupg | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install gnupg ${DEFAULT}" ;fi
+
+
 echo -n -e "               virtualbox" 
-apt install virtualbox virtualbox-ext-pack
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+ 
+echo "deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" | tee -a /etc/apt/sources.list.d/virtualbox.list
+apt update 2>/dev/null
+apt install virtualbox-6.1
+wget https://download.virtualbox.org/virtualbox/6.1.8/Oracle_VM_VirtualBox_Extension_Pack-6.1.8.vbox-extpack
+VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-6.1.8.vbox-extpack
 if [ "$(dpkg --get-selections virtualbox | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install virtualbox virtualbox-ext-pack ${DEFAULT}" ;fi
 
 echo -n -e "               transmission-cli " & echo -n $(apt install transmission-cli -y >&- 2>&-)
