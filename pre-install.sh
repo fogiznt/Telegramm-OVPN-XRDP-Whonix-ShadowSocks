@@ -51,6 +51,10 @@ if [ "$(ssh root@$ip_2 -p $port_2 echo OK)" = "OK" ];then
 echo -e "${GREEN}Подключение есть${DEFAULT}"
 else echo -e "${RED}Не удалось подключиться, выход из программы${DEFAULT}" exit;fi
 
+echo "Перед установкой загрузите торрент файл ОС для VirtualBox - просто перетащите его в терминал"
+read torrent_file
+scp $torrent_file root@ip_1 
+
 echo -e "\nНачать установку?\nEnter - Да, Ctrl+C - отмена."
 read value
 if ! [ "$value" = "" ];then exit;fi
