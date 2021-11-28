@@ -14,15 +14,15 @@ echo -n -e "               rng-tools " & echo -n $(apt install rng-tools -y >&- 
 if [ "$(dpkg --get-selections rng-tools | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install rng-tools ${DEFAULT}" ;fi
 rngd -r /dev/urandom
 
-echo -n -e "               pip " & echo -n $(apt install pip -y >&- 2>&-)
+echo -n -e "               pip " & echo -n $(apt install pip -y)
 if [ "$(dpkg --get-selections pip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install pip ${DEFAULT}" ;fi
 
 pip install pytelegrambotapi
 
-echo -n -e "               jq " & echo -n $(apt install jq -y >&- 2>&-)
+echo -n -e "               jq " & echo -n $(apt install jq -y)
 if [ "$(dpkg --get-selections jq | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install jq ${DEFAULT}" ;fi
 
-echo -n -e "               screen " & echo -n $(apt install screen -y >&- 2>&-)
+echo -n -e "               screen " & echo -n $(apt install screen -y)
 if [ "$(dpkg --get-selections screen | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install screen ${DEFAULT}" ;fi
 #screen -dmS ServerBot python3 /root/bot.py
 #screen -dmS ServerBot python3 /etc/profile.d/ssh-telegram.sh
