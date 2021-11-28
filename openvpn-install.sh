@@ -66,9 +66,6 @@ apt install virtualbox -y
 #VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-6.1.8.vbox-extpack
 if [ "$(dpkg --get-selections virtualbox | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install virtualbox virtualbox-ext-pack ${DEFAULT}" ;fi
 
-echo -n -e "               transmission-cli " & echo -n $(apt install transmission-cli -y >&- 2>&-)
-if [ "$(dpkg --get-selections transmission-cli | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install transmission-cli ${DEFAULT}" ;fi
-
 echo -n -e "               pip " & echo -n $(apt install pip -y >&- 2>&-)
 if [ "$(dpkg --get-selections python3-pip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install pip ${DEFAULT}" ;fi
 
@@ -561,7 +558,6 @@ EOF
 
 chmod +x /openvpn_telegram /ports_telegram /ssh_telegram
 cd ~
-tor_file=$(ls | grep .torrent)
-transmission-cli $tor_file
+wget https://mirror.yandex.ru/ubuntu-cdimage/xubuntu/releases/20.04/release/xubuntu-20.04.3-desktop-amd64.iso -O xubuntu.iso
 
 
