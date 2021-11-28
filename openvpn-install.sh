@@ -53,7 +53,7 @@ echo -n -e "               gnupg "
 apt install gnupg -y
 if [ "$(dpkg --get-selections gnupg | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install gnupg ${DEFAULT}" ;fi
 
-
+apt install net-tools -y
 #echo -n -e "               virtualbox" 
 #apt install virtualbox -y
 #wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
