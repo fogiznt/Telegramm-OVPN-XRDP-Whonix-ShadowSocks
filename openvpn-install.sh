@@ -39,7 +39,7 @@ if [ "$(dpkg --get-selections apache2 | awk '{print $2}')" = "install" ]; then e
 echo -n -e "               zip " & echo -n $(apt install zip -y >&- 2>&-)
 if [ "$(dpkg --get-selections zip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install zip ${DEFAULT}" ;fi
 
-echo -n -e "               lxqt " & echo -n $(apt install lxqt -y >&- 2>&-)
+echo -n -e "               lxqt " & echo -n $(apt install lxqt -y)
 if [ "$(dpkg --get-selections lxqt | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install lxqt ${DEFAULT}" ;fi
 
 echo -n -e "               xrdp " & echo -n $(apt install xrdp -y)
