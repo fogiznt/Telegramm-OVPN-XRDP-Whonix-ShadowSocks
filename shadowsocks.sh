@@ -4,7 +4,7 @@ GREEN='\033[1;32m'
 BLUE='\033[1;34m'
 DEFAULT='\033[0m'
 
-echo -n -e "${DEFAULT}Обновление списка пакетов ${DEFAULT}" & echo -e ${GREEN} $(apt update 2>/dev/null | grep packages | cut -d '.' -f 1 | tr -cd '[[:digit:]]') "${DEFAULT} пакетов могут быть обновлены."
+echo -n -e "${DEFAULT}Обновление списка пакетов ${DEFAULT}" & echo -e ${GREEN} $(apt update --fix-missing 2>/dev/null | grep packages | cut -d '.' -f 1 | tr -cd '[[:digit:]]') "${DEFAULT} пакетов могут быть обновлены."
 echo -e "Установка пакетов: "
 
 echo -n -e "               shadowsocks-libev " & echo -n $(apt install shadowsocks-libev -y >&- 2>&-)
