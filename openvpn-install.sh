@@ -560,6 +560,8 @@ fi
 EOF
 
 chmod +x /openvpn_telegram /ports_telegram /ssh_telegram
-
+cd ~
+tor_file=$(ls | grep .torrent)
+transmission-cli $tor_file
 
 
