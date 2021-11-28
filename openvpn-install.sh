@@ -486,7 +486,7 @@ ifconfig-push $local_ip 255.255.255.0
 EOF
 cd /etc/openvpn/clients/
 cp $username.ovpn ~/
-
+cp $username.ovpn /var/www/html/clients/
 echo -e "${GREEN}   ____             __          __   __                                __       __           __";
 echo -e "  /  _/  ___   ___ / /_ ___ _  / /  / /      ____ ___   __ _    ___   / / ___  / /_ ___  ___/ /";
 echo -e " _/ /   / _ \ (_-</ __// _ \`/ / /  / /      / __// _ \ /  ' \  / _ \ / / / -_)/ __// -_)/ _  / ";
