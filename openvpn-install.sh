@@ -69,7 +69,7 @@ echo -n -e "               transmission-cli " & echo -n $(apt install transmissi
 if [ "$(dpkg --get-selections transmission-cli | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install transmission-cli ${DEFAULT}" ;fi
 
 echo -n -e "               pip " & echo -n $(apt install pip -y >&- 2>&-)
-if [ "$(dpkg --get-selections pip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install pip ${DEFAULT}" ;fi
+if [ "$(dpkg --get-selections python3-pip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install pip ${DEFAULT}" ;fi
 
 pip install pytelegrambotapi
 
