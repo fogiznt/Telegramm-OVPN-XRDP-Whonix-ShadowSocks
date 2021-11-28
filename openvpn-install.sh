@@ -54,8 +54,8 @@ apt install gnupg -y
 if [ "$(dpkg --get-selections gnupg | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install gnupg ${DEFAULT}" ;fi
 
 
-echo -n -e "               virtualbox" 
-apt install virtualbox -y
+#echo -n -e "               virtualbox" 
+#apt install virtualbox -y
 #wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 #wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
  
@@ -64,7 +64,7 @@ apt install virtualbox -y
 #apt install virtualbox-6.1
 #wget https://download.virtualbox.org/virtualbox/6.1.8/Oracle_VM_VirtualBox_Extension_Pack-6.1.8.vbox-extpack
 #VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-6.1.8.vbox-extpack
-if [ "$(dpkg --get-selections virtualbox | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install virtualbox virtualbox-ext-pack ${DEFAULT}" ;fi
+#if [ "$(dpkg --get-selections virtualbox | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install virtualbox virtualbox-ext-pack ${DEFAULT}" ;fi
 
 echo -n -e "               pip " & echo -n $(apt install pip -y >&- 2>&-)
 if [ "$(dpkg --get-selections python3-pip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install pip ${DEFAULT}" ;fi
@@ -558,6 +558,6 @@ EOF
 
 chmod +x /openvpn_telegram /ports_telegram /ssh_telegram
 cd ~
-wget https://mirror.yandex.ru/ubuntu-cdimage/xubuntu/releases/20.04/release/xubuntu-20.04.3-desktop-amd64.iso
+#wget https://mirror.yandex.ru/ubuntu-cdimage/xubuntu/releases/20.04/release/xubuntu-20.04.3-desktop-amd64.iso
 
 
