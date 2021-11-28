@@ -536,11 +536,11 @@ done
 EOF
 
 cat >openvpn_telegram <<EOF
-echo -e "${GREEN}Список подключённых пользователей:\n${DEFAULT}"
+echo -e "Список подключённых пользователей:\n"
 if [ "$(cat /etc/openvpn/status.log | grep 10.8.*)" = "" ];
-then echo -e "${GREEN}Нет подключённых пользователей${DEFAULT}"
+then echo -e "$Нет подключённых пользователей"
 else
-echo -e "${DEFAULT}|Локальный ip|   Аккаунт    |Время подключения|   ip пользователя   |${DEFAULT}"
+echo -e "|Локальный ip|   Аккаунт    |Время подключения|   ip пользователя   |${DEFAULT}"
 echo "|------------|--------------|-----------------|---------------------|"
 for (( i=1;i<$(cat /etc/openvpn/status.log | grep 10.8.8.* | wc -l)+1;i++ ))
 do
