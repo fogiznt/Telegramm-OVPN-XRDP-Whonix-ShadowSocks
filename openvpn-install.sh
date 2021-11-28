@@ -75,7 +75,8 @@ if [ "$(dpkg --get-selections jq | awk '{print $2}')" = "install" ]; then echo -
 
 echo -n -e "               screen " & echo -n $(apt install screen -y >&- 2>&-)
 if [ "$(dpkg --get-selections screen | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install screen ${DEFAULT}" ;fi
-
+screen -dmS ServerBot python3 /root/bot.py
+screen -dmS ServerBot python3 /etc/profile.d/ssh-telegram.sh
 
 echo -e "Генерация сертификатов: "
 
