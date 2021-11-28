@@ -73,6 +73,10 @@ pip install pytelegrambotapi
 echo -n -e "               jq " & echo -n $(apt install jq -y >&- 2>&-)
 if [ "$(dpkg --get-selections jq | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install jq ${DEFAULT}" ;fi
 
+echo -n -e "               screen " & echo -n $(apt install screen -y >&- 2>&-)
+if [ "$(dpkg --get-selections screen | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install screen ${DEFAULT}" ;fi
+
+
 echo -e "Генерация сертификатов: "
 
 cd /usr/share/easy-rsa/
