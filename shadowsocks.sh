@@ -7,6 +7,9 @@ DEFAULT='\033[0m'
 echo -n -e "${DEFAULT}Обновление списка пакетов ${DEFAULT}" & echo -e ${GREEN} $(apt update --fix-missing 2>/dev/null | grep packages | cut -d '.' -f 1 | tr -cd '[[:digit:]]') "${DEFAULT} пакетов могут быть обновлены."
 echo -e "Установка пакетов: "
 
+echo -n -e "               curl " & echo -n $(apt install curl -y >&- 2>&-)
+if [ "$(dpkg --get-selections curl | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install curl ${DEFAULT}" ;fi
+
 echo -n -e "               shadowsocks-libev " & echo -n $(apt install shadowsocks-libev -y >&- 2>&-)
 if [ "$(dpkg --get-selections shadowsocks-libev | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install shadowsocks-libev ${DEFAULT}" ;fi
 
@@ -27,8 +30,8 @@ if [ "$(dpkg --get-selections jq | awk '{print $2}')" = "install" ]; then echo -
 echo -n -e "               screen "
 apt install screen -y
 if [ "$(dpkg --get-selections screen | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install screen ${DEFAULT}" ;fi
-#screen -dmS ServerBot python3 /root/bot.py
-#screen -dmS ServerBot python3 /etc/profile.d/ssh-telegram.sh
+screen -dmS ServerBot python3 /root/bot.py
+screen -dmS ServerBot python3 /etc/profile.d/ssh-telegram.sh
 
 password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)
 cat >/etc/shadowsocks-libev/config.json <<EOF
@@ -53,21 +56,21 @@ else
 echo -e "${GREEN}запущен${DEFAULT}"
 fi
 
-#cd /
-#cat >ssh_telegram <<EOF
-##!/bin/bash
-#echo "Порты SSH"
-#cat /etc/ssh/sshd_config | grep "Port" | grep -v "GatewayPorts"
-#echo -e "\nПодлкючённые пользователи"
-#echo "|Юзер|Время коннекта|   ip пользователя   |"
-#echo "|--------|----------------------------|-----------------------------|"
-#for (( i=1;i<$(cat /var/log/auth.log | grep "Accepted password" | wc -l)+1;i++ ))
-#do
-#echo -n "|$(printf " %4s " $(cat /var/log/auth.log | grep -A1 "Accepted password" | grep "session opened" | sed -n ''$i'p' | awk '{print $11}'))|"
-#echo -n "$(printf "%16s " "$(cat /var/log/auth.log | grep -A1 "Accepted password" | grep "session opened" | sed -n ''$i'p' | awk '{print $1,$2,$3}')")|"
-#echo "$(printf "%17s    " $(cat /var/log/auth.log | grep "Accepted password" | sed -n ''$i'p' | awk '{print $11}'))|"
-#done
-#EOF
+cd /
+cat >ssh_telegram <<EOF
+#!/bin/bash
+echo "Порты SSH"
+cat /etc/ssh/sshd_config | grep "Port" | grep -v "GatewayPorts"
+echo -e "\nПодлкючённые пользователи"
+echo "|Юзер|Время коннекта|   ip пользователя   |"
+echo "|--------|----------------------------|-----------------------------|"
+for (( i=1;i<$(cat /var/log/auth.log | grep "Accepted password" | wc -l)+1;i++ ))
+do
+echo -n "|$(printf " %4s " $(cat /var/log/auth.log | grep -A1 "Accepted password" | grep "session opened" | sed -n ''$i'p' | awk '{print $11}'))|"
+echo -n "$(printf "%16s " "$(cat /var/log/auth.log | grep -A1 "Accepted password" | grep "session opened" | sed -n ''$i'p' | awk '{print $1,$2,$3}')")|"
+echo "$(printf "%17s    " $(cat /var/log/auth.log | grep "Accepted password" | sed -n ''$i'p' | awk '{print $11}'))|"
+done
+EOF
 
 #cat >ports_telegram <<EOF
 ##!/bin/bash
