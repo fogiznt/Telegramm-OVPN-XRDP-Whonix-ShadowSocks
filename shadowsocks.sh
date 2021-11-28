@@ -19,7 +19,7 @@ rngd -r /dev/urandom
 
 echo -n -e "               pip " 
 apt install pip -y
-if [ "$(dpkg --get-selections pip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install pip ${DEFAULT}" ;fi
+if [ "$(dpkg --get-selections python3-pip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install pip ${DEFAULT}" ;fi
 
 pip install pytelegrambotapi
 
