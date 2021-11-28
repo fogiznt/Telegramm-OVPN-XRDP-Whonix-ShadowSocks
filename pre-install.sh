@@ -55,7 +55,7 @@ else echo -e "${RED}Не удалось подключиться, выход и�
 #read torrent_file
 #scp -P $port_1 $torrent_file root@$ip_1:/root/
 
-echo "Введите токен вашего бота"
+echo "Введите токен вашего первого бота"
 read bot_token
 echo "Введите id вашего аккаунта"
 read telegram_id
@@ -107,9 +107,61 @@ fi
 EOF
 
 scp -P $port_1 bot.py root@$ip_1:/root/
-scp -P $port_2 bot.py root@$ip_2:/root/
-
 scp -P $port_1 ssh-telegram.sh root@$ip_1:/etc/profile.d/
+
+
+rm -f bot.py ssh-telegram.sh
+
+echo "Введите токен вашего второго бота"
+read bot_token
+
+cat >bot.py <<EOF
+from subprocess import check_output
+import telebot
+import time
+bot = telebot.TeleBot("$bot_token")#токен бота
+user_id = $telegram_id #id вашего аккаунта
+@bot.message_handler(content_types=["text"])
+def main(message):
+   if (user_id == message.chat.id): #проверяем, что пишет именно владелец
+      comand = message.text  #текст сообщения
+      try: #если команда невыполняемая - check_output выдаст exception
+         bot.send_message(message.chat.id, check_output(comand, shell = True))
+      except:
+         bot.send_message(message.chat.id, "Invalid input") #если команда некорректна
+if __name__ == '__main__':
+    while True:
+        try:#добавляем try для бесперебойной работы
+            bot.polling(none_stop=True)#запуск бота
+        except:
+            time.sleep(10)#в случае падения
+
+EOF
+
+cat >ssh-telegram.sh <<EOF
+USERID="$telegram_id"
+KEY="$bot_token"
+TIMEOUT="10"
+URL="https://api.telegram.org/bot\$KEY/sendMessage"
+DATE_EXEC="\$(date "+%d %b %Y %H:%M")"
+TMPFILE='/tmp/ipinfo-\$DATE_EXEC.txt'
+if [ -n "\$SSH_CLIENT" ]; then
+        IP=\$(echo \$SSH_CLIENT | awk '{print \$1}')
+        PORT=\$(echo \$SSH_CLIENT | awk '{print \$3}')
+        HOSTNAME=\$(hostname -f)
+        IPADDR=\$(hostname -I | awk '{print \$1}')
+        curl http://ipinfo.io/\$IP -s -o \$TMPFILE
+        CITY=\$(cat \$TMPFILE | jq '.city' | sed 's/"//g')
+        REGION=\$(cat \$TMPFILE | jq '.region' | sed 's/"//g')
+        COUNTRY=\$(cat \$TMPFILE | jq '.country' | sed 's/"//g')
+        ORG=\$(cat \$TMPFILE | jq '.org' | sed 's/"//g')
+        TEXT="\$DATE_EXEC: \${USER} logged in to \$HOSTNAME (\$IPADDR) from \$IP - \$ORG - \$CITY, \$REGION, \$COUNTRY on port \$PORT"
+        curl -s --max-time \$TIMEOUT -d "chat_id=\$USERID&disable_web_page_preview=1&text=\$TEXT" \$URL > /dev/null
+        rm \$TMPFILE
+fi
+EOF
+
+scp -P $port_2 bot.py root@$ip_2:/root/
 scp -P $port_2 ssh-telegram.sh root@$ip_2:/etc/profile.d/
 
 echo -e "\nНачать установку?\nEnter - Да, Ctrl+C - отмена."
