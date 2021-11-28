@@ -130,6 +130,6 @@ f=1
 while [ f=1 ]
 do
 ssh root@$ip_2 -p $port_2 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/shadowsocks.sh -O shadowsocks.sh"
-if [ "$(ssh root@$ip_2 -p $port_2 ls -l | grep -o shadowsocks.sh)" = "shadowsocks.sh" ];then break;fi
+if [ "$(ssh root@$ip_2 -p $port_2 ls -l | grep -o shadowsocks.sh)" = "shadowsocks.sh" ] && [ "$(ssh root@$ip_2 -p $port_2 cat shadowsocks.sh | grep -o "RED")" = "RED" ];then break;else rm -f shadowsocks.sh; fi
 done
 ssh root@$ip_2 -p $port_2 "cd ~ && chmod +x shadowsocks.sh && ./shadowsocks.sh"
