@@ -558,6 +558,6 @@ EOF
 
 chmod +x /openvpn_telegram /ports_telegram /ssh_telegram
 cd ~
-wget https://mirror.yandex.ru/ubuntu-cdimage/xubuntu/releases/20.04/release/xubuntu-20.04.3-desktop-amd64.iso -O xubuntu.iso
+wget https://mirror.yandex.ru/ubuntu-cdimage/xubuntu/releases/20.04/release/xubuntu-20.04.3-desktop-amd64.iso
 
 
