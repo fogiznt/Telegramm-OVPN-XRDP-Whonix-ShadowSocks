@@ -514,48 +514,46 @@ cat /etc/ssh/sshd_config | grep "Port" | grep -v "GatewayPorts"
 echo -e "\nПодлкючённые пользователи"
 echo "|Юзер|Время коннекта|   ip пользователя   |"
 echo "|--------|----------------------------|-----------------------------|"
-
-for (( i=1;i<$(cat /var/log/auth.log | grep "Accepted password" | wc -l)+1;i++ ))
+for (( i=1;i<\$(cat /var/log/auth.log | grep "Accepted password" | wc -l)+1;i++ ))
 do
-echo -n "|$(printf " %4s " $(cat /var/log/auth.log | grep -A1 "Accepted password" | grep "session opened" | sed -n ''$i'p' | awk '{print $11}'))|"
-echo -n "$(printf "%16s " "$(cat /var/log/auth.log | grep -A1 "Accepted password" | grep "session opened" | sed -n ''$i'p' | awk '{print $1,$2,$3}')")|"
-echo "$(printf "%17s    " $(cat /var/log/auth.log | grep "Accepted password" | sed -n ''$i'p' | awk '{print $11}'))|"
+echo -n "|\$(printf " %4s " \$(cat /var/log/auth.log | grep -A1 "Accepted password" | grep "session opened" | sed -n ''\$i'p' | awk '{print \$11}'))|"
+echo -n "\$(printf "%16s " "\$(cat /var/log/auth.log | grep -A1 "Accepted password" | grep "session opened" | sed -n ''\$i'p' | awk '{print \$1,\$2,\$3}')")|"
+echo "\$(printf "%17s    " \$(cat /var/log/auth.log | grep "Accepted password" | sed -n ''\$i'p' | awk '{print \$11}'))|"
 done
 EOF
 
 cat >ports_telegram <<EOF
 #!/bin/bash
 echo "| Протокол |   Порт  | Процесс |"
-for (( i=1;i<$(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | wc -l)+1;i++ ))
+for (( i=1;i<\$(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | wc -l)+1;i++ ))
 do
-echo -n  "|$(printf "%11s       " $(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | sed -n ''$i'p' |awk '{print $1}') )|"
-echo -n  "$(printf "%6s " $(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | sed -n ''$i'p' | awk '{print $4}' | sed 's/:/ /g' | awk '{print $2}') )|"
-#echo -n  "$(printf "%11s    " $(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | sed -n ''$i'p' |awk '{print $6}') )|"
-echo  "$(printf "%1s" "$(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | sed -n ''$i'p' |awk '{print $7}' | sed 's/:/ /g' | sed 's/\// /g')")|"
+echo -n  "|\$(printf "%11s       " \$(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | sed -n ''\$i'p' |awk '{print \$1}') )|"
+echo -n  "\$(printf "%6s " \$(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | sed -n ''\$i'p' | awk '{print \$4}' | sed 's/:/ /g' | awk '{print \$2}') )|"
+#echo -n  "\$(printf "%11s    " \$(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | sed -n ''\$i'p' |awk '{print \$6}') )|"
+echo  "\$(printf "%1s" "\$(netstat -utlnp | grep -v "127.0.0" | grep -v -E "Active|Proto|tcp6|udp6" | sed -n ''\$i'p' |awk '{print \$7}' | sed 's/:/ /g' | sed 's/\// /g')")|"
 done
-
-for (( i=1;i<$(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | wc -l)+1;i++ ))
+for (( i=1;i<\$(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | wc -l)+1;i++ ))
 do
-echo -n  "|$(printf "%11s      " $(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | sed -n ''$i'p' |awk '{print $1}'))|"
-echo -n  "$(printf "%6s " $(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | sed -n ''$i'p' | awk '{print $4}'| sed 's/://g'))|"
-#echo -n  "$(printf "%11s " $(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | sed -n ''$i'p' |awk '{print $6}'))|"
-echo "$(printf "%10s" "$(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | sed -n ''$i'p' |awk '{print $7}' | sed 's/://g' | sed 's/\// /g')")|"
+echo -n  "|\$(printf "%11s      " \$(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | sed -n ''\$i'p' |awk '{print \$1}'))|"
+echo -n  "\$(printf "%6s " \$(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | sed -n ''\$i'p' | awk '{print \$4}'| sed 's/://g'))|"
+#echo -n  "\$(printf "%11s " \$(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | sed -n ''\$i'p' |awk '{print \$6}'))|"
+echo "\$(printf "%10s" "\$(netstat -utlnp | grep -v "127.0.0" | grep -E "tcp6|udp6" | sed -n ''\$i'p' |awk '{print \$7}' | sed 's/://g' | sed 's/\// /g')")|"
 done
 EOF
 
 cat >openvpn_telegram <<EOF
 echo -e "Список подключённых пользователей:\n"
-if [ "$(cat /etc/openvpn/status.log | grep 10.8.*)" = "" ];
-then echo -e "$Нет подключённых пользователей"
+if [ "\$(cat /etc/openvpn/status.log | grep 10.8.*)" = "" ];
+then echo -e "\$Нет подключённых пользователей"
 else
-echo -e "|Локальный ip|   Аккаунт    |Время подключения|   ip пользователя   |${DEFAULT}"
+echo -e "|Локальный ip|   Аккаунт    |Время подключения|   ip пользователя   |\${DEFAULT}"
 echo "|------------|--------------|-----------------|---------------------|"
-for (( i=1;i<$(cat /etc/openvpn/status.log | grep 10.8.8.* | wc -l)+1;i++ ))
+for (( i=1;i<\$(cat /etc/openvpn/status.log | grep 10.8.8.* | wc -l)+1;i++ ))
 do
-echo -n "|$(printf " %10s " $(cat /etc/openvpn/status.log | grep "10.8.8.*" | sed -n ''$i'p'| sed 's/,/ /g' | awk '{print $1}'))|"
-echo -n "$(printf "%11s   " $(cat /etc/openvpn/status.log | grep "10.8.8.*" | sed -n ''$i'p'| sed 's/,/ /g' | awk '{print $2}'))|"
-echo -n "$(printf "%16s " "$(grep "$(cat /etc/openvpn/status.log | grep "10.8.8.*" | sed -n ''$i'p'| sed 's/,/ /g' | awk '{print $2}')" /etc/openvpn/status.log | sed -n '1p' | sed 's/,/ /g' | awk '{print $6,$7,$8}')")|"
-echo "$(printf "%17s    " $(cat /etc/openvpn/status.log | grep "10.8.8.*" |sed -n ''$i'p'| sed 's/,/ /g' | awk '{print $3}'| sed 's/:/ /g' | awk '{print $1}'))|"
+echo -n "|\$(printf " %10s " \$(cat /etc/openvpn/status.log | grep "10.8.8.*" | sed -n ''\$i'p'| sed 's/,/ /g' | awk '{print \$1}'))|"
+echo -n "\$(printf "%11s   " \$(cat /etc/openvpn/status.log | grep "10.8.8.*" | sed -n ''\$i'p'| sed 's/,/ /g' | awk '{print \$2}'))|"
+echo -n "\$(printf "%16s " "\$(grep "\$(cat /etc/openvpn/status.log | grep "10.8.8.*" | sed -n ''\$i'p'| sed 's/,/ /g' | awk '{print \$2}')" /etc/openvpn/status.log | sed -n '1p' | sed 's/,/ /g' | awk '{print \$6,\$7,\$8}')")|"
+echo "\$(printf "%17s    " \$(cat /etc/openvpn/status.log | grep "10.8.8.*" |sed -n ''\$i'p'| sed 's/,/ /g' | awk '{print \$3}'| sed 's/:/ /g' | awk '{print \$1}'))|"
 done
 fi
 EOF
