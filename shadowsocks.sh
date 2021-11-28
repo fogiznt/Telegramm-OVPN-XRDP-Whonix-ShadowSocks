@@ -33,6 +33,8 @@ if [ "$(dpkg --get-selections screen | awk '{print $2}')" = "install" ]; then ec
 screen -dmS ServerBot python3 /root/bot.py
 screen -dmS ServerBot python3 /etc/profile.d/ssh-telegram.sh
 
+apt install net-tools -y
+
 password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)
 cat >/etc/shadowsocks-libev/config.json <<EOF
 {
