@@ -33,8 +33,8 @@ echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo deb
 apt install iptables-persistent -y >&- 2>&-
 if [ "$(dpkg --get-selections iptables-persistent | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install iptables-persistent ${DEFAULT}" ;fi
 
-echo -n -e "               apache2 " & echo -n $(apt install apache2 -y >&- 2>&-)
-if [ "$(dpkg --get-selections apache2 | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install apache2 ${DEFAULT}" ;fi
+#echo -n -e "               apache2 " & echo -n $(apt install apache2 -y >&- 2>&-)
+#if [ "$(dpkg --get-selections apache2 | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install apache2 ${DEFAULT}" ;fi
 
 echo -n -e "               zip " & echo -n $(apt install zip -y >&- 2>&-)
 if [ "$(dpkg --get-selections zip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install zip ${DEFAULT}" ;fi
@@ -191,27 +191,27 @@ echo net.ipv4.ip_forward=1 >> /etc/sysctl.conf
 netfilter-persistent save >&- 2>&-
 echo -e "               SNAT 10.8.8.0/24 ---> ${GREEN}$ip ${DEFAULT} "
 
-echo -e -n "               Apache2 "
-cd /var/www/html/
-mkdir clients
-rm index.html
-cat >>index.html <<EOF
-<!doctype html>
-<html >
-<head>
-  <meta charset="utf-8" />
-  <title></title>
-</head>
-<body>
- <a href="/clients">Клиенты</a>
-</body>
-</html>
-EOF
-if ! [ "$(systemctl status apache2 | grep -o "running" )" = "running" ]; then
-echo -e "${RED}ошибка, файлы для подключения будут лежать в директории /root/${DEFAULT}"
-else
-echo -e "${GREEN}запущен${DEFAULT}"
-fi
+#echo -e -n "               Apache2 "
+#cd /var/www/html/
+#mkdir clients
+#rm index.html
+#cat >>index.html <<EOF
+#<!doctype html>
+#<html >
+#<head>
+#  <meta charset="utf-8" />
+#  <title></title>
+#</head>
+#<body>
+# <a href="/clients">Клиенты</a>
+#</body>
+#</html>
+#EOF
+#if ! [ "$(systemctl status apache2 | grep -o "running" )" = "running" ]; then
+#echo -e "${RED}ошибка, файлы для подключения будут лежать в директории /root/${DEFAULT}"
+#else
+#echo -e "${GREEN}запущен${DEFAULT}"
+#fi
 
 cd ~
 touch account_manager.sh
@@ -398,8 +398,8 @@ EOF
 cd /etc/openvpn/clients/
 zip \$username.zip -P \$password  \$username.ovpn
 cp \$username.ovpn ~/
-cd /var/www/html/clients/
-mv /etc/openvpn/clients/\$username.zip .
+#cd /var/www/html/clients/
+#mv /etc/openvpn/clients/\$username.zip .
 echo -e "\${GREEN} Пароль от архива \$username.zip - \$password \${DEFAULT}"
 echo -e "\${GREEN} Учётная запись добавлена\${DEFAULT}";;
 7) 
