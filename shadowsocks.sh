@@ -110,6 +110,7 @@ done
 fi
 EOF
 
+chmod +x /ssh_telegram /openvpn_telegram /ports_telegram
 
 ip=$(wget -qO- eth0.me)
 echo "Ваш конфиг для ShadowSocks:"
