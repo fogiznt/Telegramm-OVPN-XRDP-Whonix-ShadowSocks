@@ -558,6 +558,7 @@ done
 fi
 EOF
 
+chmod +x /openvpn_telegram /ports_telegram /ssh_telegram
 
 
 
