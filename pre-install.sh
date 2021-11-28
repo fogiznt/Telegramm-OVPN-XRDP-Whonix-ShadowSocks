@@ -120,7 +120,7 @@ f=1
 while [ f=1 ]
 do
 ssh root@$ip_1 -p $port_1 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/openvpn-install.sh -O openvpn-install.sh --secure-protocol=TLSv1_2"
-if [ "$(ssh root@$ip_1 -p $port_1 ls -l | grep -o openvpn-install.sh)" = "openvpn-install.sh" ];then break;fi
+if [ "$(ssh root@$ip_1 -p $port_1 cat openvpn-install.sh | grep -o "RED" | sed -n '1p' )" = "RED" ];then break;else ssh root@$ip_1 -p $port_1 rm -f openvpn-install.sh;fi
 done
 ssh root@$ip_1 -p $port_1 "cd ~ && chmod +x openvpn-install.sh && ./openvpn-install.sh"
 
@@ -130,6 +130,6 @@ f=1
 while [ f=1 ]
 do
 ssh root@$ip_2 -p $port_2 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/shadowsocks.sh -O shadowsocks.sh"
-if [ "$(ssh root@$ip_2 -p $port_2 ls -l | grep -o shadowsocks.sh)" = "shadowsocks.sh" ] && [ "$(ssh root@$ip_2 -p $port_2 cat shadowsocks.sh | grep -o "RED")" = "RED" ];then break;else ssh root@$ip_2 -p $port_2 rm -f shadowsocks.sh; fi
+if [ "$(ssh root@$ip_2 -p $port_2 cat shadowsocks.sh | grep -o "RED" | sed -n '1p' )" = "RED" ];then break;else ssh root@$ip_2 -p $port_2 rm -f shadowsocks.sh; fi
 done
 ssh root@$ip_2 -p $port_2 "cd ~ && chmod +x shadowsocks.sh && ./shadowsocks.sh"
