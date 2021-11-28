@@ -54,6 +54,8 @@ apt install gnupg -y
 if [ "$(dpkg --get-selections gnupg | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install gnupg ${DEFAULT}" ;fi
 
 apt install net-tools -y
+apt install torbrowser-launcher
+
 #echo -n -e "               virtualbox" 
 #apt install virtualbox -y
 #wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
@@ -579,4 +581,6 @@ cd ~
 #wget https://mirror.yandex.ru/ubuntu-cdimage/xubuntu/releases/20.04/release/xubuntu-20.04.3-desktop-amd64.iso
 
 adduser user
-
+wget https://github.com/shadowsocks/shadowsocks-qt5/releases/download/v3.0.1/Shadowsocks-Qt5-3.0.1-x86_64.AppImage
+cp Shadowsocks-Qt5-3.0.1-x86_64.AppImage /home/user/Desktop/
+chmod +x /home/user/Desktop/Shadowsocks-Qt5-3.0.1-x86_64.AppImage
