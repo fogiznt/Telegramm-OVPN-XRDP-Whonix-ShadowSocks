@@ -116,9 +116,16 @@ echo -e "\nНачать установку?\nEnter - Да, Ctrl+C - отмена
 read value
 if ! [ "$value" = "" ];then exit;fi
 echo -e "${GREEN}Первый сервер${DEFAULT}"
-ssh root@$ip_1 -p $port_1 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/openvpn-install.sh -O openvpn-install.sh --secure-protocol=TLSv1_2 && chmod +x openvpn-install.sh && ./openvpn-install.sh"
-echo -e "${GREEN}Второй сервер${DEFAULT}"
+f=1
+while [ f=1 ]
+do
+ssh root@$ip_1 -p $port_1 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/openvpn-install.sh -O openvpn-install.sh --secure-protocol=TLSv1_2"
+if [ "$(ssh root@$ip_1 -p $port_1 ls -l | grep -o openvpn-install.sh)" = "openvpn-install.sh" ];then exit;fi
+done
+ssh root@$ip_1 -p $port_1 "cd ~ && chmod +x openvpn-install.sh && ./openvpn-install.sh"
 
+
+echo -e "${GREEN}Второй сервер${DEFAULT}"
 f=1
 while [ f=1 ]
 do
