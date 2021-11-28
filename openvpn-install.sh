@@ -561,7 +561,7 @@ EOF
 
 cat >crypt <<EOF
 #!/bin/bash
-cd /home/user3/
+cd /home/user/
 password=\$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c\${1:-32};echo;)
 echo "Скопируйте пароль \$password\n"
 zip user.zip -r -P \$password Desktop/ Documents/ Downloads/ Music/ Pictures/ Public/ Templates/ Videos/
@@ -570,7 +570,7 @@ EOF
 
 cat >decrypt <<EOF
 #!/bin/bash
-cd /home/user3/
+cd /home/user/
 password=\$(ls /root/ | grep "passwd" | sed 's/=/ /g' | awk '{print \$2}')
 unzip -P \$password user.zip
 file=\$(ls /root/ | grep "passwd")
