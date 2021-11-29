@@ -187,6 +187,11 @@ done
 ssh root@$ip_2 -p $port_2 "ip=\$(wget -qO- eth0.me) && cd ~ && chmod +x openvpn-install.sh && sed -i '43,70d;579,587d' openvpn-install.sh && sed -i 's/"redirect-gateway def1 bypass-dhcp"/route 255.255.255.0/g' openvpn-install.sh && ./openvpn-install.sh"
 
 echo "Установление соединения между серверами."
+cd /root/
 scp -P $port_2 root@$ip_2:/root/client-1.ovpn /root/
-scp -P $port_1 /root/client-1.ovpn root@$ip_1:/etc/openvpn/
+text=$(cat /root/client-1.ovpn)
+cat >/root/client-1.conf <<EOF
+$text
+EOF
+scp -P $port_1 /root/client-1.conf root@$ip_1:/etc/openvpn/
 ssh root@$ip_1 -p $port_1 "systemctl start openvpn@client-1"
