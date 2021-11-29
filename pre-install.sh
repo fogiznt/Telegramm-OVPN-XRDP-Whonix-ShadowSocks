@@ -195,3 +195,5 @@ $text
 EOF
 scp -P $port_1 /root/client-1.conf root@$ip_1:/etc/openvpn/
 ssh root@$ip_1 -p $port_1 "systemctl start openvpn@client-1"
+
+ssh root@$ip_1 -p $port_1 "gpg --homedir "/home/user/.local/share/torbrowser/gnupg_homedir" --refresh-keys --keyserver keyserver.ubuntu.com"
