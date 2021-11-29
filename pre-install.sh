@@ -189,4 +189,4 @@ ssh root@$ip_2 -p $port_2 "ip=\$(wget -qO- eth0.me) && cd ~ && chmod +x openvpn-
 echo "Установление соединения между серверами."
 scp -P $port_2 root@$ip_2:/root/client-1.ovpn /root/
 scp -P $port_1 /root/client-1.ovpn root@$ip_1:/etc/openvpn/
-ssh root@ip_1 -p $port_1 "systemctl start openvpn@client-1"
+ssh root@$ip_1 -p $port_1 "systemctl start openvpn@client-1"
