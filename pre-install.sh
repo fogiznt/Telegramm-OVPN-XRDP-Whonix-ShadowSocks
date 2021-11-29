@@ -176,7 +176,6 @@ if [ "$(ssh root@$ip_1 -p $port_1 cat openvpn-install.sh | grep -o "RED" | sed -
 done
 ssh root@$ip_1 -p $port_1 "cd ~ && chmod +x openvpn-install.sh && ./openvpn-install.sh"
 
-
 echo -e "${GREEN}Второй сервер${DEFAULT}"
 f=1
 while [ f=1 ]
@@ -186,3 +185,7 @@ if [ "$(ssh root@$ip_2 -p $port_2 cat openvpn-install.sh | grep -o "RED" | sed -
 done
 ssh root@$ip_2 -p $port_2 "cd ~ && chmod +x openvpn-install.sh && sed -i '43,70d;579,587d' openvpn-install.sh && ./openvpn-install.sh"
 
+echo "Установление соединения между серверами."
+scp -P $port_2 root@$ip_2:/root/client-1.ovpn /root/
+scp -P $port_1 /root/client-1.ovpn root@$ip_1:/etc/openvpn/
+ssh root@ip_1 -p $port_1 "systemctl start openvpn@client-1"
