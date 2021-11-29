@@ -183,7 +183,8 @@ do
 ssh root@$ip_2 -p $port_2 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/openvpn-install.sh -O openvpn-install.sh --secure-protocol=TLSv1_2"
 if [ "$(ssh root@$ip_2 -p $port_2 cat openvpn-install.sh | grep -o "RED" | sed -n '1p' )" = "RED" ];then break;else ssh root@$ip_2 -p $port_2 rm -f openvpn-install.sh;fi
 done
-ssh root@$ip_2 -p $port_2 "cd ~ && chmod +x openvpn-install.sh && sed -i '43,70d;579,587d' openvpn-install.sh && ./openvpn-install.sh"
+
+ssh root@$ip_2 -p $port_2 "ip=\$(wget -qO- eth0.me) && cd ~ && chmod +x openvpn-install.sh && sed -i '43,70d;579,587d' openvpn-install.sh && sed -i 's/"redirect-gateway def1 bypass-dhcp"/route 255.255.255.0/g' openvpn-install.sh && ./openvpn-install.sh"
 
 echo "Установление соединения между серверами."
 scp -P $port_2 root@$ip_2:/root/client-1.ovpn /root/
