@@ -174,7 +174,7 @@ do
 ssh root@$ip_1 -p $port_1 "cd ~ && wget https://raw.githubusercontent.com/fogiznt/Telegramm-OVPN-XRDP-Whonix-ShadowSocks/main/openvpn-install.sh -O openvpn-install.sh --secure-protocol=TLSv1_2"
 if [ "$(ssh root@$ip_1 -p $port_1 cat openvpn-install.sh | grep -o "RED" | sed -n '1p' )" = "RED" ];then break;else ssh root@$ip_1 -p $port_1 rm -f openvpn-install.sh;fi
 done
-ssh root@$ip_1 -p $port_1 "cd ~ && chmod +x openvpn-install.sh && ./openvpn-install.sh"
+ssh root@$ip_1 -p $port_1 "cd ~ && chmod +x openvpn-install.sh && sed -i 's/dev tun/dev tun0/g' openvpn-install.sh && ./openvpn-install.sh"
 
 echo -e "${GREEN}Второй сервер${DEFAULT}"
 f=1
@@ -184,7 +184,11 @@ ssh root@$ip_2 -p $port_2 "cd ~ && wget https://raw.githubusercontent.com/fogizn
 if [ "$(ssh root@$ip_2 -p $port_2 cat openvpn-install.sh | grep -o "RED" | sed -n '1p' )" = "RED" ];then break;else ssh root@$ip_2 -p $port_2 rm -f openvpn-install.sh;fi
 done
 
-ssh root@$ip_2 -p $port_2 "ip=\$(wget -qO- eth0.me) && cd ~ && chmod +x openvpn-install.sh && sed -i '43,70d;579,587d' openvpn-install.sh && sed -i 's/"redirect-gateway def1 bypass-dhcp"/route $ip 255.255.255.0/g' openvpn-install.sh && sed -i 's/10.8.8./10.8.9./g' && ./openvpn-install.sh"
+ssh root@$ip_2 -p $port_2 "ip=\$(wget -qO- eth0.me) && cd ~ && chmod +x openvpn-install.sh && sed -i '43,70d;579,587d' openvpn-install.sh && sed -i 's/"redirect-gateway def1 bypass-dhcp"/route $ip 255.255.255.0/g' openvpn-install.sh && sed -i 's/10.8.8./10.8.9./g'"
+ssh root@$ip_2 -p $port_2 "cd ~ && sed -i 's/proto udp/proto tcp/g' openvpn-install.sh && sed -i 's/dev tun/dev tun1/g' openvpn-install.sh && ./openvpn-install.sh"
+
+
+
 
 echo "Установление соединения между серверами."
 cd /root/
@@ -194,6 +198,7 @@ cat >/root/client-1.conf <<EOF
 $text
 EOF
 scp -P $port_1 /root/client-1.conf root@$ip_1:/etc/openvpn/
+ssh root@$ip_1 -p $port_1 "echo '150 vpn.out' >> /etc/iproute2/rt_tables && iptables -t mangle -I OUTPUT -m owner --uid-owner user -p tcp ! --dst 127.0.0.1 ! --dport 9050 -j MARK --set-mark 100 && ip rule add fwmark 100 table vpn.out && ip route add default dev tun1 table vpn.out && iptables -t nat -I POSTROUTING -m mark --mark 100 -j MASQUERADE"
+ssh root@$ip_1 -p $port_1 "echo 'socks-proxy 127.0.0.1 9050' >> /etc/openvpn/client-1.conf && echo 'socks-proxy-retry' >> /etc/openvpn/client-1.conf"
 ssh root@$ip_1 -p $port_1 "systemctl start openvpn@client-1"
-
 ssh root@$ip_1 -p $port_1 "gpg --homedir "/home/user/.local/share/torbrowser/gnupg_homedir" --refresh-keys --keyserver keyserver.ubuntu.com"
