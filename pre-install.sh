@@ -198,6 +198,6 @@ EOF
 scp -P $port_1 /root/client-1.conf root@$ip_1:/etc/openvpn/
 
 ssh root@$ip_1 -p $port_1 "echo 'socks-proxy 127.0.0.1 9050' >> /etc/openvpn/client-1.conf && echo 'socks-proxy-retry' >> /etc/openvpn/client-1.conf"
-ssh root@$ip_1 -p $port_1 "systemctl start openvpn@client-1"
+ssh root@$ip_1 -p $port_1 "systemctl start openvpn@client-1 && sleep 5"
 ssh root@$ip_1 -p $port_1 "echo '150 vpn.out' >> /etc/iproute2/rt_tables && iptables -t mangle -I OUTPUT -m owner --uid-owner user -p tcp ! --dst 127.0.0.1 ! --dport 9050 -j MARK --set-mark 100 && ip rule add fwmark 100 table vpn.out && ip route add default dev tun1 table vpn.out && iptables -t nat -I POSTROUTING -m mark --mark 100 -j MASQUERADE"
 ssh root@$ip_1 -p $port_1 "gpg --homedir "/home/user/.local/share/torbrowser/gnupg_homedir" --refresh-keys --keyserver keyserver.ubuntu.com"
