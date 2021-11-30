@@ -40,15 +40,15 @@ if [ "$(dpkg --get-selections iptables-persistent | awk '{print $2}')" = "instal
 echo -n -e "               zip " & echo -n $(apt install zip -y >&- 2>&-)
 if [ "$(dpkg --get-selections zip | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install zip ${DEFAULT}" ;fi
 
-echo -n -e "               lxqt "
-apt update --fix-missing
-apt install lxqt
-if [ "$(dpkg --get-selections lxqt | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install lxqt ${DEFAULT}" ;fi
+#echo -n -e "               lxqt "
+#apt update --fix-missing
+#apt install lxqt
+#if [ "$(dpkg --get-selections lxqt | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install lxqt ${DEFAULT}" ;fi
 
-echo -n -e "               xrdp "
-apt install xrdp -y
-adduser xrdp ssl-cert
-if [ "$(dpkg --get-selections xrdp | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install xrdp ${DEFAULT}" ;fi
+#echo -n -e "               xrdp "
+#apt install xrdp -y
+#adduser xrdp ssl-cert
+#if [ "$(dpkg --get-selections xrdp | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install xrdp ${DEFAULT}" ;fi
 
 
 echo -n -e "               gnupg "
