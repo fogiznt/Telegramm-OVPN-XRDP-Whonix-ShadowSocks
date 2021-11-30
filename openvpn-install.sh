@@ -578,7 +578,7 @@ cat >decrypt <<EOF
 #!/bin/bash
 cd /home/user/
 password=\$(ls /root/ | grep "passwd" | sed 's/=/ /g' | awk '{print \$2}')
-unzip -P \$password user.zip
+unzip -P \$password user.zip && rm -f user.zip
 file=\$(ls /root/ | grep "passwd")
 rm -f /root/\$file
 EOF
