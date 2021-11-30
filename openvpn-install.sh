@@ -45,7 +45,7 @@ f=1
 while f=1 
 do
 apt update --fix-missing
-apt install lxqt
+apt install lxqt -y
 if [ "$(dpkg --get-selections lxqt | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}" && break; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install lxqt ${DEFAULT}" ;fi
 done
 
@@ -61,7 +61,7 @@ apt install gnupg -y
 if [ "$(dpkg --get-selections gnupg | awk '{print $2}')" = "install" ]; then echo -e "${GREEN}OK${DEFAULT}"; else echo -e "${RED}ОШИБКА, попробуйте установить данный пакет самостоятельно -${GREEN} apt install gnupg ${DEFAULT}" ;fi
 
 apt install net-tools -y
-apt install torbrowser-launcher
+apt install torbrowser-launcher -y
 
 #echo -n -e "               virtualbox" 
 #apt install virtualbox -y
