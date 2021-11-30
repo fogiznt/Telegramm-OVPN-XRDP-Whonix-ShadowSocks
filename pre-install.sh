@@ -184,7 +184,7 @@ ssh root@$ip_2 -p $port_2 "cd ~ && wget https://raw.githubusercontent.com/fogizn
 if [ "$(ssh root@$ip_2 -p $port_2 cat openvpn-install.sh | grep -o "RED" | sed -n '1p' )" = "RED" ];then break;else ssh root@$ip_2 -p $port_2 rm -f openvpn-install.sh;fi
 done
 
-ssh root@$ip_2 -p $port_2 "ip=\$(wget -qO- eth0.me) && cd ~ && chmod +x openvpn-install.sh && sed -i '43,70d;579,587d' openvpn-install.sh && sed -i 's/"redirect-gateway def1 bypass-dhcp"/route $ip 255.255.255.0/g' openvpn-install.sh && sed -i 's/10.8.8./10.8.9./g'"
+ssh root@$ip_2 -p $port_2 "ip=\$(wget -qO- eth0.me) && cd ~ && chmod +x openvpn-install.sh && sed -i '43,70d;579,587d' openvpn-install.sh && sed -i 's/"redirect-gateway def1 bypass-dhcp"/route $ip 255.255.255.0/g' openvpn-install.sh && sed -i 's/10.8.8./10.8.9./g' openvpn-install.sh"
 ssh root@$ip_2 -p $port_2 "cd ~ && sed -i 's/proto udp/proto tcp/g' openvpn-install.sh && sed -i 's/dev tun/dev tun1/g' openvpn-install.sh && ./openvpn-install.sh"
 ssh root@$ip_2 -p $port_2 "cd /root/ && sed -i 's/explicit-exit-notify 2//g' client-1.ovpn"
 
