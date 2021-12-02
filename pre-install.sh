@@ -10,7 +10,28 @@ ssh-keygen -q -N ""
 fi
 
 echo -e "Цепочка будет состоять из 2-х серверов"
+echo -e "1 - выбрать севера из БД\n2 - ввести данные самостоятельно\n"
 
+read value
+echo;
+if [ "$value" = "1" ]; then
+for (( i=1;i<$(cat server-base.sh | wc -l )+1;i++ ))
+do
+sed -n ''$i'p' server-base.sh
+done
+
+echo "Выберите первый сервер из списка по номеру"
+read server_number
+ip_1=$(sed -n ''$server_number'p' server-base.sh | awk '{print $2}' )
+port_1=$(sed -n ''$server_number'p' server-base.sh | awk '{print $3}')
+password_1=$(sed -n ''$server_number'p' server-base.sh | awk '{print $4}')
+echo "Выберите второй сервер из списка по номеру"
+read server_number
+ip_2=$(sed -n ''$server_number'p' server-base.sh | awk '{print $2}' )
+port_2=$(sed -n ''$server_number'p' server-base.sh | awk '{print $3}')
+password_2=$(sed -n ''$server_number'p' server-base.sh | awk '{print $4}')
+
+else
 echo -e "${GREEN}Первый сервер${DEFAULT}"
 echo -e "Введите ip"
 read ip_1
@@ -26,6 +47,14 @@ echo -e "Введите порт ssh - по умолчанию 22"
 read -rp "" -e -i 22 port_2
 echo -e "Введите пароль"
 read password_2
+
+max_value=$(tail -n 1 server-base.sh | awk '{print $1}')
+cat >>server-base.sh <<EOF
+$(( max_value + 1 )) $ip_1 $port_1 $password_1
+$(( max_value + 2 )) $ip_2 $port_2 $password_2
+EOF
+fi
+
 echo "| Сервер |      ip адрес       | порт ssh |    Пароль от root   |"
 echo "|--------|---------------------|----------|---------------------|"
 echo -n "|   1    |"
